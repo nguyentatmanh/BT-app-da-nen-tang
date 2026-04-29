@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { WeatherResponse } from '../types/weather';
 
-const API_KEY = process.env.EXPO_PUBLIC_OPENWEATHER_API_KEY;
 const BASE_URL = 'https://api.openweathermap.org/data/2.5';
 
 const weatherClient = axios.create({
@@ -10,7 +9,15 @@ const weatherClient = axios.create({
 });
 
 export const fetchWeather = async (lat: number, lon: number): Promise<WeatherResponse> => {
-  if (!API_KEY) {
+  const apiKey = process.env.EXPO_PUBLIC_OPENWEATHER_API_KEY;
+  
+  if (__DEV__) {
+    console.log('fetchWeather Debug:', {
+      hasApiKey: Boolean(apiKey),
+    });
+  }
+
+  if (!apiKey) {
     throw new Error('OpenWeatherMap API key is missing. Please add it to your .env file.');
   }
 
@@ -19,7 +26,7 @@ export const fetchWeather = async (lat: number, lon: number): Promise<WeatherRes
       params: {
         lat,
         lon,
-        appid: API_KEY,
+        appid: process.env.EXPO_PUBLIC_OPENWEATHER_API_KEY,
         units: 'metric',
       },
     });

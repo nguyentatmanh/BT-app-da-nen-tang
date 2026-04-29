@@ -23,4 +23,4 @@ export const MOCK_WEATHER: Record<'sunny' | 'rainy' | 'cold' | 'cloudy', Weather
   },
 };
 
-export const ACTIVE_MOCK = MOCK_WEATHER.sunny;
+export const ACTIVE_MOCK = MOCK_WEATHER.cloudy;
